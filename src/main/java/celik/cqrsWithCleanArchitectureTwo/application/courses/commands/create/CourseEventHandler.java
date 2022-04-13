@@ -20,6 +20,11 @@ public class CourseEventHandler {
     public void on(CourseCreatedEvent courseCreatedEvent){
         Course course =new Course();
         BeanUtils.copyProperties(courseCreatedEvent,course);
+
+        if(this.courseRepository.existsCourseByCourseName(courseCreatedEvent.getCourseName())){
+            throw new RuntimeException("kurs mevcut");
+        }
+
         this.courseRepository.save(course);
     }
 
